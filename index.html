@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora IMC</title>
+    
+    
+</head>
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary-color: rgb(17, 86, 102);
+    --primary-color-darker: rgb(9, 48, 56);
+  }
+
+body{
+    background-color: var(--primary-color)
+}
+
+.container{
+    margin: 40px auto;
+    
+    width: 50vw;
+    background-color: white;
+    border-radius: 10px;
+    padding-bottom: 1px;
+
+}
+
+.container > h1{
+    padding-top: 40px;
+    padding-left: 28px;
+}
+
+.container_info{
+width: 100%;
+height: 40%;
+display: flex;
+justify-content: center;
+border-radius: 10px 10px 0 0;
+padding-top: 30px;
+
+}
+
+.container_imc{
+width: 100%;
+padding-left: 30px;
+height: 40%;
+}
+
+.container_resultado{
+width: 100%;
+
+}
+
+
+.titulo{
+ padding-top: 50px;
+ padding-left: 20px;
+}
+
+h1{
+    font-weight: bolder;
+    font-family: sans-serif;
+}
+
+h2{
+    font-family: sans-serif;
+    font-weight: 400;
+}
+
+.container_imc > h2{
+    padding-top: 5px;
+   
+    line-height: 35px;
+}
+
+
+.container_resultado > h2{
+    margin-top: 5px;
+    line-height: 35px;
+}
+
+input{
+   margin: 0 auto;
+    width: 90%;
+    height: 30px;
+}
+
+form{
+    display: flex;
+    height: 200px;
+    flex-wrap: wrap;
+    align-items: left;
+    justify-content: space-around;
+    flex-direction: column;
+
+}
+
+form > label{
+    margin-left: 30px;
+}
+
+button{
+    width: 90%;
+    height: 30px;
+    background-color: var(--primary-color);
+    margin-top: 0px;
+    margin-bottom: 30px;
+    margin-left: 30px;
+}
+
+.mensagem{
+    margin: 0 auto;
+    margin-bottom: 50px;
+    width: 90%;
+    height: 30px;
+    background-color: red;
+    visibility: hidden;
+    
+}
+
+button:hover{
+    background-color: var(--primary-color-darker);
+}
+
+
+
+@media (width < 500px){
+    h1{
+        font-size: 24px;
+    }
+    h2{
+        font-size: 16px;
+    }
+    .container{
+        margin: 40px auto;
+        
+        width: 100vw;
+        background-color: white;
+        border-radius: 10px;
+        padding-bottom: 1px;
+    
+    }
+    
+    .mensagem{
+        margin-bottom: 10px;
+
+    }
+
+    .form > button{
+       margin: 0 auto;
+       margin-bottom: 20px;
+    }
+}
+</style>
+
+
+
+<body>
+    <div class="container">
+        <h1>Tabela IMC</h1>
+        <div class="container_info">
+          
+            <div class="container_imc">
+                <h1>IMC</h1>
+                <h2>Menos do que 18,5 <br>Entre 18,5 e 24,9 <br>Entre 25 e 29,9 <br>Entre 30 e 34,9 <br>Entre 35 e 39,9 <br>Mais do que 40</h2>
+            </div>
+
+            <div class="container_resultado">
+                <h1>Resultado</h1>
+                <h2>Abaixo do peso <br>Peso normal <br>Sobrepeso <br>Obesidade grau 1 <br>Obesidade grau 2 <br>Obesidade grau 3</h2>
+            </div>
+
+        </div>
+
+      <h1>Calcule seu IMC</h1>
+
+
+      <form action="" method="get" class="form" id="form">
+        <label for="peso">Peso:</label>
+        <input type="text" id="peso" class="peso" placeholder="Digite seu peso aqui...">
+        <label for="altura">Altura:</label>
+        <input type="text" id="altura" class="altura" placeholder="Digite sua altura em metros, separado por ponto.">
+        <br>
+        <button type="submit"><h2 style="color: white;">Calcular</h2></button>
+    </form>
+        <div class="mensagem" id="resultado"></div>
+    </div>
+
+    <footer>
+
+        <h1>Allif Brun</h1>
+    </footer>
+
+
+
+</body>
+
+<script>
+    function calcula(){
+const form = document.getElementById("form");
+const resultado = document.getElementById("resultado");
+function recebeEventoForm(evento){
+    evento.preventDefault();
+    const peso = parseFloat(form.querySelector(".peso").value);
+    const altura = parseFloat(form.querySelector(".altura").value);
+    const imc = peso / altura**2;
+    console.log(parseFloat(imc.toFixed(2)));
+   const teste =isNaN(peso);
+   const teste2 = isNaN(altura);
+   if(teste == true || teste2 == true){
+       resultado.style.visibility = "visible";
+       resultado.style.background = "black";
+       resultado.style.color = "white";
+       resultado.innerHTML = "Digite valores válidos!"
+       alert("Erro: Digite apenas números!");
+   }
+    if(imc < 18.5){
+     resultado.style.visibility = 'visible';
+     resultado.style.background = "brown";
+     resultado.innerHTML = `<h2>Seu IMC é: ${imc.toFixed(2)} (abaixo do peso)</h2>`
+    } else if(imc > 18.5 && imc<=24.9){
+        resultado.style.visibility = 'visible';
+        resultado.style.background = "lightgreen";
+        resultado.innerHTML = `<h2>Seu IMC é: ${imc.toFixed(2)} (peso normal)</h2>`
+       } else if(imc >= 25 && imc<=29.9){
+        resultado.style.visibility = 'visible';
+        resultado.style.background = "yellow";
+        resultado.innerHTML = `<h2>Seu IMC é: ${imc.toFixed(2)} (sobrepeso)</h2>`
+       } else if(imc >= 30 && imc <= 34.9){
+        resultado.style.visibility = 'visible';
+        resultado.style.background = "orange";
+        resultado.innerHTML = `<h2>Seu IMC é: ${imc.toFixed(2)} (obesidade grau 1)</h2>`
+       } else if(imc >= 35 && imc <= 39.9){
+        resultado.style.visibility = 'visible';
+        resultado.style.background = "darkorange";
+        resultado.innerHTML = `<h2>Seu IMC é: ${imc.toFixed(2)} (obesidade grau 2)</h2>`
+       }else if(imc > 40){
+        resultado.style.visibility = 'visible';
+        resultado.style.background = "red";
+        resultado.innerHTML = `<h2>Seu IMC é: ${imc.toFixed(2)} (obesidade grau 3)</h2>`
+       }
+}
+form.addEventListener("submit", recebeEventoForm);
+}
+
+calcula();
+</script>
+
+</html>
